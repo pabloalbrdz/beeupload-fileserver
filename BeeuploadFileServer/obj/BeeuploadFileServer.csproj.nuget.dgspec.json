@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PabloAlbRdz\\source\\repos\\BeeuploadFileServer\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {}
+    "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PabloAlbRdz\\source\\repos\\BeeuploadFileServer\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {
+    "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PabloAlbRdz\\source\\repos\\BeeuploadFileServer\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
+        "projectUniqueName": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
         "projectName": "BeeuploadFileServer",
-        "projectPath": "C:\\Users\\PabloAlbRdz\\source\\repos\\BeeuploadFileServer\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
+        "projectPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
         "packagesPath": "C:\\Users\\PabloAlbRdz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PabloAlbRdz\\source\\repos\\BeeuploadFileServer\\BeeuploadFileServer\\obj\\",
+        "outputPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PabloAlbRdz\\AppData\\Roaming\\NuGet\\NuGet.Config",
