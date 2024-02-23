@@ -16,16 +16,16 @@ namespace BeeuploadFileServer.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult createUserFolder(long id)
+        public IActionResult createUserFolder(long userid)
         {
-            if (!System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id)))
+            if (!System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
             {
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id));
-                System.IO.File.Copy(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"), Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id + "\\profilepic.jpg"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id + "\\document"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id + "\\image"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id + "\\music"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id + "\\video"));
+                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid));
+                System.IO.File.Copy(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"), Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\profilepic.jpg"));
+                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\document"));
+                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image"));
+                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music"));
+                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video"));
                 return Ok();
             }
             else
@@ -35,11 +35,11 @@ namespace BeeuploadFileServer.Controllers
         }
 
         [HttpDelete("[action]")]
-        public IActionResult deleteUserFolder(long id)
+        public IActionResult deleteUserFolder(long userid)
         {
-            if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id)))
+            if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
             {
-                foreach (string dir in Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id)))
+                foreach (string dir in Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                 {
                     string[] files = Directory.GetFiles(dir);
                     foreach (string file in files)
@@ -48,11 +48,11 @@ namespace BeeuploadFileServer.Controllers
                     }
                     System.IO.Directory.Delete(dir, true);
                 }
-                foreach (string file in Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id)))
+                foreach (string file in Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                 {
                     System.IO.File.Delete(file);
                 }
-                System.IO.Directory.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + id), true);
+                System.IO.Directory.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid), true);
                 return Ok();
             }
             else
