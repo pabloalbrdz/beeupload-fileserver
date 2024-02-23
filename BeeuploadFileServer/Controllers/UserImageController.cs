@@ -16,59 +16,77 @@ namespace BeeuploadFileServer.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult uploadUserImage(long userid, long imgid, IFormFile imgfile)
+        [RequestFormLimits(ValueCountLimit = int.MaxValue, MultipartBodyLengthLimit = long.MaxValue)]
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> uploadUserImage(long userid, long imgid, IFormFile imgfile)
         {
-            if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\"))){
-                if (System.IO.Path.GetExtension(imgfile.FileName) == ".jpg" || System.IO.Path.GetExtension(imgfile.FileName) == ".png")
+            try
+            {
+                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
                 {
-                    if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg")) 
-                        && !System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
+                    if (System.IO.Path.GetExtension(imgfile.FileName) == ".jpg" || System.IO.Path.GetExtension(imgfile.FileName) == ".png")
                     {
-                        string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\");
-                        using (var stream = System.IO.File.Create(dirPath + imgid + System.IO.Path.GetExtension(imgfile.FileName)))
+                        if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"))
+                            && !System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
                         {
-                            imgfile.CopyToAsync(stream);
+                            string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\");
+                            using (var stream = System.IO.File.Create(dirPath + imgid + System.IO.Path.GetExtension(imgfile.FileName)))
+                            {
+                                await imgfile.CopyToAsync(stream);
+                            }
+                            return Ok();
                         }
-                        return Ok();
+                        else
+                        {
+                            return Conflict("Error: Imagen ya existe.");
+                        }
                     }
                     else
                     {
-                        return Conflict("Error: Imagen ya existe.");
+                        return BadRequest("Error: Solo se pudeden subir imagenes en formato .JPG o .PNG.");
                     }
                 }
                 else
                 {
-                   return BadRequest("Error: Solo se pudeden subir imagenes en formato .JPG o .PNG.");
+                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                return StatusCode(500, "Error: No se ha podido subir la imagen.");
             }
         }
 
         [HttpDelete("[action]")]
-        public IActionResult deleteUserImage(long userid, long imgid)
+        public async Task<IActionResult> deleteUserImage(long userid, long imgid)
         {
-            if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
+            try
             {
-                if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg")))
+                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
                 {
-                    System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"));
-                    return Ok();
-                }else if(System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
-                {
-                    System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png"));
-                    return Ok();
+                    if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg")))
+                    {
+                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"));
+                        return Ok();
+                    }
+                    else if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
+                    {
+                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png"));
+                        return Ok();
+                    }
+                    else
+                    {
+                        return NotFound("Error: Imagen no existe.");
+                    }
                 }
                 else
                 {
-                    return NotFound("Error: Imagen no existe.");
+                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                return StatusCode(500, "Error: No se ha podido eliminar la imagen.");
             }
         }
 

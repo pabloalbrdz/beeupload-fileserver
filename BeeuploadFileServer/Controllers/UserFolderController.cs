@@ -16,48 +16,61 @@ namespace BeeuploadFileServer.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult createUserFolder(long userid)
+        public async Task<IActionResult> createUserFolder(long userid)
         {
-            if (!System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+            try
             {
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid));
-                System.IO.File.Copy(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"), Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\profilepic.jpg"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\document"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music"));
-                System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video"));
-                return Ok();
+                if (!System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                {
+                    System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid));
+                    System.IO.File.Copy(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"), Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\profilepic.jpg"));
+                    System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\document"));
+                    System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image"));
+                    System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music"));
+                    System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video"));
+                    return Ok();
+                }
+                else
+                {
+                    return Conflict("Error: Usuario ya tiene carpeta.");
+                }
             }
-            else
-            {
-                return Conflict("Error: Usuario ya tiene carpeta.");
+            catch (Exception ex) {
+                return StatusCode(500, "Error: No se ha podido crear la carpeta de usuario.");
             }
         }
 
         [HttpDelete("[action]")]
-        public IActionResult deleteUserFolder(long userid)
+        public async Task<IActionResult> deleteUserFolder(long userid)
         {
-            if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
+            try
             {
-                foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
                 {
-                    string[] files = Directory.GetFiles(dir);
-                    foreach (string file in files)
+                    foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                    {
+                        string[] files = Directory.GetFiles(dir);
+                        foreach (string file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                        System.IO.Directory.Delete(dir, true);
+                    }
+                    foreach (string file in System.IO.Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                     {
                         System.IO.File.Delete(file);
                     }
-                    System.IO.Directory.Delete(dir, true);
+                    System.IO.Directory.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid), true);
+                    return Ok();
                 }
-                foreach (string file in System.IO.Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                else
                 {
-                    System.IO.File.Delete(file);
+                    return BadRequest("Error: Usuario no existe o no tiene carpeta.");
                 }
-                System.IO.Directory.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid), true);
-                return Ok();
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest("Error: Usuario no existe o no tiene carpeta.");
+                return StatusCode(500, "Error: No se ha podido eliminar la carpeta de usuario.");
             }
         }
 
