@@ -30,7 +30,7 @@ namespace BeeuploadFileServer.Controllers
             }
             else
             {
-                return BadRequest("Error: Usuario ya tiene carpeta.");
+                return Conflict("Error: Usuario ya tiene carpeta.");
             }
         }
 
@@ -39,7 +39,7 @@ namespace BeeuploadFileServer.Controllers
         {
             if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
             {
-                foreach (string dir in Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                 {
                     string[] files = Directory.GetFiles(dir);
                     foreach (string file in files)
@@ -48,7 +48,7 @@ namespace BeeuploadFileServer.Controllers
                     }
                     System.IO.Directory.Delete(dir, true);
                 }
-                foreach (string file in Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                foreach (string file in System.IO.Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                 {
                     System.IO.File.Delete(file);
                 }
