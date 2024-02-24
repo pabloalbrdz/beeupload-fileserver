@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\beeuploadfiles\\0\\profilepic.jpg"
     },
     {
-      "Id": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\1\\profilepic.jpg",
-      "PackagePath": "staticwebassets\\beeuploadfiles\\1\\profilepic.jpg"
-    },
-    {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.BeeuploadFileServer.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

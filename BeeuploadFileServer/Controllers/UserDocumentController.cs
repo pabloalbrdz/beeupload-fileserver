@@ -42,7 +42,7 @@ namespace BeeuploadFileServer.Controllers
                     }
                     else
                     {
-                        return BadRequest("Error: Solo se pudeden subir documentos en formato .PDF");
+                        return BadRequest("Error: Solo se pudeden subir documentos en formato .PDF.");
                     }
                 }
                 else
@@ -52,7 +52,7 @@ namespace BeeuploadFileServer.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Error: No se ha podido subir el documento");
+                return StatusCode(500, "Error: No se ha podido subir el documento.");
             }
         }
 
