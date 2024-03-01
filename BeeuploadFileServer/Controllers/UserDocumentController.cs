@@ -84,5 +84,30 @@ namespace BeeuploadFileServer.Controllers
             }
         }
 
+        [HttpDelete("[action]")]
+        public async Task<IActionResult> deleteAllUserDocuments(long userid)
+        {
+            try
+            {
+                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\document\\")))
+                {
+                    string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\document\\"));
+                    foreach (string file in files)
+                    {
+                        System.IO.File.Delete(file);
+                    }
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error: No se ha podido eliminar el documento.");
+            }
+        }
+
     }
 }

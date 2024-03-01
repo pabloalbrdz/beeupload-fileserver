@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PxG0Vlw7Pflu3hnJFO9bLI3ONuAC77jxH+2kqy1FRgA=",
+  "Hash": "pADbZkNndbtHSULGGLwv9x0Q2rf1cAKjAp4FyboUWkQ=",
   "Source": "BeeuploadFileServer",
   "BasePath": "_content/BeeuploadFileServer",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BeeuploadFileServer\\wwwroot",
       "Source": "BeeuploadFileServer",
-      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
       "BasePath": "_content/BeeuploadFileServer",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\0\\profilepic.jpg",
+      "Identity": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\0\\profilepic.jpg",
       "SourceId": "BeeuploadFileServer",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
       "BasePath": "_content/BeeuploadFileServer",
       "RelativePath": "beeuploadfiles/0/profilepic.jpg",
       "AssetKind": "All",
@@ -32,6 +32,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\1\\document\\1.pdf",
+      "SourceId": "BeeuploadFileServer",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
+      "BasePath": "_content/BeeuploadFileServer",
+      "RelativePath": "beeuploadfiles/1/document/1.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\beeuploadfiles\\1\\document\\1.pdf"
+    },
+    {
+      "Identity": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\1\\profilepic.jpg",
+      "SourceId": "BeeuploadFileServer",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
+      "BasePath": "_content/BeeuploadFileServer",
+      "RelativePath": "beeuploadfiles/1/profilepic.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\beeuploadfiles\\1\\profilepic.jpg"
     }
   ]
 }
