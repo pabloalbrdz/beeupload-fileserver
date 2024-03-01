@@ -442,11 +442,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
+      "projectUniqueName": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
       "projectName": "BeeuploadFileServer",
-      "projectPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
+      "projectPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
       "packagesPath": "C:\\Users\\PabloAlbRdz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\obj\\",
+      "outputPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\PabloAlbRdz\\AppData\\Roaming\\NuGet\\NuGet.Config",
