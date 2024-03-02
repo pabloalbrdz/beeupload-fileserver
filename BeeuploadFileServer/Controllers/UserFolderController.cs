@@ -41,6 +41,36 @@ namespace BeeuploadFileServer.Controllers
         }
 
         [HttpDelete("[action]")]
+        public async Task<IActionResult> deleteUserFiles(long userid)
+        {
+            try
+            {
+                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
+                {
+                    foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                    {
+                        string[] files = Directory.GetFiles(dir);
+                        foreach (string file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                    }
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Error: Usuario no existe o no tiene carpeta.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error: No se ha podido eliminar la carpeta de usuario.");
+            }
+        }
+
+
+
+        [HttpDelete("[action]")]
         public async Task<IActionResult> deleteUserFolder(long userid)
         {
             try
