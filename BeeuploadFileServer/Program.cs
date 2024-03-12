@@ -38,4 +38,18 @@ app.MapControllers();
 
 app.UseCors("AllowSpecificOrigin");
 
+app.Use(async (context, next) =>
+{
+    context.Response.OnStarting(state =>
+    {
+        var httpContext = (HttpContext)state;
+        httpContext.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0";
+        httpContext.Response.Headers["Pragma"] = "no-cache";
+        httpContext.Response.Headers["Expires"] = "-1";
+        return Task.CompletedTask;
+    }, context);
+
+    await next.Invoke();
+});
+
 app.Run();
