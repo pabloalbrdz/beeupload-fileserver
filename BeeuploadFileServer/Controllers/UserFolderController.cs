@@ -23,7 +23,7 @@ namespace BeeuploadFileServer.Controllers
                 if (!System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                 {
                     System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid));
-                    System.IO.File.Copy(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"), Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\profilepic.jpg"));
+                    //System.IO.File.Copy(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\0\\profilepic.jpg"), Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\profilepic.jpg"));
                     System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\document"));
                     System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image"));
                     System.IO.Directory.CreateDirectory(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music"));
