@@ -25,7 +25,6 @@ C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\
 C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\scopedcss\bundle\BeeuploadFileServer.styles.css
-C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\BeeuploadFileServer.csproj.CopyComplete
 C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\BeeuploadFileServer.dll
 C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\refint\BeeuploadFileServer.dll
 C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\BeeuploadFileServer.pdb
@@ -64,3 +63,5 @@ C:\Users\PabloAlbRdz\Desktop\beeupload-fileserver\BeeuploadFileServer\obj\Debug\
 C:\Users\PabloAlbRdz\Desktop\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\BeeuploadFileServer.pdb
 C:\Users\PabloAlbRdz\Desktop\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\BeeuploadFileServer.genruntimeconfig.cache
 C:\Users\PabloAlbRdz\Desktop\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\ref\BeeuploadFileServer.dll
+C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\BeeuploadFileServer.sourcelink.json
+C:\Users\PabloAlbRdz\Desktop\beeupload\beeupload-fileserver\BeeuploadFileServer\obj\Debug\net6.0\Beeuploa.4C35DC74.Up2Date

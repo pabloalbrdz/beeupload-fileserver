@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9ME+NkiN3pb3zLhRCYdXc8mqOPCCM0/7MXZkq5l2N7E=",
+  "Hash": "laHY9+ovkVNix4gEV2oTi9iOsUuG/WDiu0IO/jpvZlY=",
   "Source": "BeeuploadFileServer",
   "BasePath": "_content/BeeuploadFileServer",
   "Mode": "Default",
@@ -26,6 +26,8 @@
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
