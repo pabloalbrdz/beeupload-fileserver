@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeeuploadFileServer.jwt;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeeuploadFileServer.Controllers
@@ -22,33 +23,42 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    if (System.IO.Path.GetExtension(imgfile.FileName) == ".jpg" || System.IO.Path.GetExtension(imgfile.FileName) == ".png")
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
                     {
-                        if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"))
-                            && !System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
+                        if (System.IO.Path.GetExtension(imgfile.FileName) == ".jpg" || System.IO.Path.GetExtension(imgfile.FileName) == ".png")
                         {
-                            string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\");
-                            using (var stream = System.IO.File.Create(dirPath + imgid + System.IO.Path.GetExtension(imgfile.FileName)))
+                            if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"))
+                                && !System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
                             {
-                                await imgfile.CopyToAsync(stream);
+                                string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\");
+                                using (var stream = System.IO.File.Create(dirPath + imgid + System.IO.Path.GetExtension(imgfile.FileName)))
+                                {
+                                    await imgfile.CopyToAsync(stream);
+                                }
+                                return Ok();
                             }
-                            return Ok();
+                            else
+                            {
+                                return Conflict("Error: Imagen ya existe.");
+                            }
                         }
                         else
                         {
-                            return Conflict("Error: Imagen ya existe.");
+                            return BadRequest("Error: Solo se pudeden subir imagenes en formato .JPG o .PNG.");
                         }
                     }
                     else
                     {
-                        return BadRequest("Error: Solo se pudeden subir imagenes en formato .JPG o .PNG.");
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
                     }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -62,26 +72,35 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg")))
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
                     {
-                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"));
-                        return Ok();
-                    }
-                    else if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
-                    {
-                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png"));
-                        return Ok();
+                        if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg")))
+                        {
+                            System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".jpg"));
+                            return Ok();
+                        }
+                        else if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png")))
+                        {
+                            System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\" + imgid + ".png"));
+                            return Ok();
+                        }
+                        else
+                        {
+                            return NotFound("Error: Imagen no existe.");
+                        }
                     }
                     else
                     {
-                        return NotFound("Error: Imagen no existe.");
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
                     }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -95,18 +114,27 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\"));
-                    foreach (string file in files)
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\")))
                     {
-                        System.IO.File.Delete(file);
+                        string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\image\\"));
+                        foreach (string file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                        return Ok();
                     }
-                    return Ok();
+                    else
+                    {
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    }
                 }
-                else
+                else 
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
