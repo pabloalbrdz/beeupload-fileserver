@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BeeuploadFileServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8d3df77e9e6826f4690b15bc488e4f88c8d3f0e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa22ee3e302181fd462b608e468bfee5004fed3a")]
 [assembly: System.Reflection.AssemblyProductAttribute("BeeuploadFileServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BeeuploadFileServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
