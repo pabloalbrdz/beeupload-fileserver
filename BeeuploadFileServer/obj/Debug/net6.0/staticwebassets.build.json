@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "laHY9+ovkVNix4gEV2oTi9iOsUuG/WDiu0IO/jpvZlY=",
+  "Hash": "hBD9x2pBZx709+lL7mtGS1N5mOFoSfXmUWzBuQn+wnI=",
   "Source": "BeeuploadFileServer",
   "BasePath": "_content/BeeuploadFileServer",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BeeuploadFileServer\\wwwroot",
       "Source": "BeeuploadFileServer",
-      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
       "BasePath": "_content/BeeuploadFileServer",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\0\\profilepic.jpg",
+      "Identity": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\beeuploadfiles\\0\\profilepic.jpg",
       "SourceId": "BeeuploadFileServer",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\wwwroot\\",
       "BasePath": "_content/BeeuploadFileServer",
       "RelativePath": "beeuploadfiles/0/profilepic.jpg",
       "AssetKind": "All",

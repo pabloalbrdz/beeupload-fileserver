@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeeuploadFileServer.jwt;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeeuploadFileServer.Controllers
@@ -45,21 +46,30 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
                     {
-                        string[] files = Directory.GetFiles(dir);
-                        foreach (string file in files)
+                        foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                         {
-                            System.IO.File.Delete(file);
+                            string[] files = Directory.GetFiles(dir);
+                            foreach (string file in files)
+                            {
+                                System.IO.File.Delete(file);
+                            }
                         }
+                        return Ok();
                     }
-                    return Ok();
+                    else
+                    {
+                        return BadRequest("Error: Usuario no existe o no tiene carpeta.");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -75,27 +85,36 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)) && userid != 0)
                     {
-                        string[] files = Directory.GetFiles(dir);
-                        foreach (string file in files)
+                        foreach (string dir in System.IO.Directory.GetDirectories(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                        {
+                            string[] files = Directory.GetFiles(dir);
+                            foreach (string file in files)
+                            {
+                                System.IO.File.Delete(file);
+                            }
+                            System.IO.Directory.Delete(dir, true);
+                        }
+                        foreach (string file in System.IO.Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
                         {
                             System.IO.File.Delete(file);
                         }
-                        System.IO.Directory.Delete(dir, true);
+                        System.IO.Directory.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid), true);
+                        return Ok();
                     }
-                    foreach (string file in System.IO.Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid)))
+                    else
                     {
-                        System.IO.File.Delete(file);
+                        return BadRequest("Error: Usuario no existe o no tiene carpeta.");
                     }
-                    System.IO.Directory.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid), true);
-                    return Ok();
                 }
                 else
                 {
-                    return BadRequest("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)

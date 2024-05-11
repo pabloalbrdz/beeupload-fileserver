@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeeuploadFileServer.jwt;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeeuploadFileServer.Controllers
@@ -23,32 +24,41 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    if (System.IO.Path.GetExtension(musicfile.FileName) == ".mp3")
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\")))
                     {
-                        if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\" + musicid + ".mp3")))
+                        if (System.IO.Path.GetExtension(musicfile.FileName) == ".mp3")
                         {
-                            string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\");
-                            using (var stream = System.IO.File.Create(dirPath + musicid + System.IO.Path.GetExtension(musicfile.FileName)))
+                            if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\" + musicid + ".mp3")))
                             {
-                                await musicfile.CopyToAsync(stream);
+                                string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\");
+                                using (var stream = System.IO.File.Create(dirPath + musicid + System.IO.Path.GetExtension(musicfile.FileName)))
+                                {
+                                    await musicfile.CopyToAsync(stream);
+                                }
+                                return Ok();
                             }
-                            return Ok();
+                            else
+                            {
+                                return Conflict("Error: Musica ya existe.");
+                            }
                         }
                         else
                         {
-                            return Conflict("Error: Musica ya existe.");
+                            return BadRequest("Error: Solo se pudede subir musica en formato .MP3.");
                         }
                     }
                     else
                     {
-                        return BadRequest("Error: Solo se pudede subir musica en formato .MP3.");
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
                     }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -62,21 +72,30 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\" + musicid + ".mp3")))
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\")))
                     {
-                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\" + musicid + ".mp3"));
-                        return Ok();
+                        if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\" + musicid + ".mp3")))
+                        {
+                            System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\" + musicid + ".mp3"));
+                            return Ok();
+                        }
+                        else
+                        {
+                            return NotFound("Error: Musica no existe.");
+                        }
                     }
                     else
                     {
-                        return NotFound("Error: Musica no existe.");
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
                     }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -90,18 +109,27 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\"));
-                    foreach (string file in files)
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\")))
                     {
-                        System.IO.File.Delete(file);
+                        string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\music\\"));
+                        foreach (string file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                        return Ok();
                     }
-                    return Ok();
+                    else
+                    {
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)

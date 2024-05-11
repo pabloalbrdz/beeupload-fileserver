@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {}
+    "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {
+    "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
+        "projectUniqueName": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
         "projectName": "BeeuploadFileServer",
-        "projectPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
+        "projectPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\BeeuploadFileServer.csproj",
         "packagesPath": "C:\\Users\\PabloAlbRdz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload\\beeupload-fileserver\\BeeuploadFileServer\\obj\\",
+        "outputPath": "C:\\Users\\PabloAlbRdz\\Desktop\\beeupload-fileserver\\BeeuploadFileServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PabloAlbRdz\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -49,9 +49,17 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Remote.Linq.Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[7.1.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.5.1, )"
             }
           },
           "imports": [
@@ -65,6 +73,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.29, 6.0.29]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.29, 6.0.29]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.29, 6.0.29]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.29, 6.0.29]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -73,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
         }
       }
     }

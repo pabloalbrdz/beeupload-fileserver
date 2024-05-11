@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BeeuploadFileServer.jwt;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeeuploadFileServer.Controllers
@@ -22,32 +23,41 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    if (System.IO.Path.GetExtension(videofile.FileName) == ".mp4")
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\")))
                     {
-                        if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4")))
+                        if (System.IO.Path.GetExtension(videofile.FileName) == ".mp4")
                         {
-                            string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\");
-                            using (var stream = System.IO.File.Create(dirPath + videoid + System.IO.Path.GetExtension(videofile.FileName)))
+                            if (!System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4")))
                             {
-                                await videofile.CopyToAsync(stream);
+                                string dirPath = Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\");
+                                using (var stream = System.IO.File.Create(dirPath + videoid + System.IO.Path.GetExtension(videofile.FileName)))
+                                {
+                                    await videofile.CopyToAsync(stream);
+                                }
+                                return Ok();
                             }
-                            return Ok();
+                            else
+                            {
+                                return Conflict("Error: Video ya existe.");
+                            }
                         }
                         else
                         {
-                            return Conflict("Error: Video ya existe.");
+                            return BadRequest("Error: Solo se pudeden subir videos en formato .MP4.");
                         }
                     }
                     else
                     {
-                        return BadRequest("Error: Solo se pudeden subir videos en formato .MP4.");
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
                     }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -61,26 +71,35 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4")))
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\")))
                     {
-                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4"));
-                        return Ok();
-                    }
-                    else if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4")))
-                    {
-                        System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4"));
-                        return Ok();
+                        if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4")))
+                        {
+                            System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4"));
+                            return Ok();
+                        }
+                        else if (System.IO.File.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4")))
+                        {
+                            System.IO.File.Delete(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\" + videoid + ".mp4"));
+                            return Ok();
+                        }
+                        else
+                        {
+                            return NotFound("Error: Video no existe.");
+                        }
                     }
                     else
                     {
-                        return NotFound("Error: Video no existe.");
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
                     }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
@@ -94,18 +113,27 @@ namespace BeeuploadFileServer.Controllers
         {
             try
             {
-                if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\")))
+                String token = Request.Headers["Auth"];
+                bool authorized = JWTService.verifyUserToken(userid, token);
+                if (authorized)
                 {
-                    string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\"));
-                    foreach (string file in files)
+                    if (System.IO.Directory.Exists(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\")))
                     {
-                        System.IO.File.Delete(file);
+                        string[] files = Directory.GetFiles(Path.Combine(_webHostEnvironment.ContentRootPath, "wwwroot\\beeuploadfiles\\" + userid + "\\video\\"));
+                        foreach (string file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+                        return Ok();
                     }
-                    return Ok();
+                    else
+                    {
+                        return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    }
                 }
                 else
                 {
-                    return NotFound("Error: Usuario no existe o no tiene carpeta.");
+                    return Unauthorized("Error: No tienes permiso para esta accion.");
                 }
             }
             catch (Exception ex)
